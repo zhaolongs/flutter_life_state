@@ -32,6 +32,8 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   bool currentMounted = false;
   ///当前页面是否有焦点
   bool currentFocus = true;
+  ///是否输出日志
+  bool isBaseLifeLog = false;
 
   /// createState 是在创建 StatefulWidget 的时候会调用，
   /// initState 是 StatefulWidget 创建完后调用的第一个方法，而且只执行一次，
@@ -57,7 +59,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
     onCreat();
     onStart();
     onResumed();
-    debugPrint(" BaseLifeState 生命周期 单次 Frame 绘制回调");
+    if(isBaseLifeLog) {
+      debugPrint(" BaseLifeState 生命周期 单次 Frame 绘制回调");
+    }
     ///记录当前Widget的的状态
     currentMounted = mounted;
     ///添加一个焦点监听
@@ -76,7 +80,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
     ///判断当前是否有焦点
     /// 当被dialog挡住时，虽然可见，但是不可操作
     bool isFirstFocus = FocusScope.of(context).isFirstFocus;
-    debugPrint(" BaseLifeState 生命周期 FocusScope $isFirstFocus");
+    if(isBaseLifeLog) {
+      debugPrint(" BaseLifeState 生命周期 FocusScope $isFirstFocus");
+    }
     ///上一次的焦点与本次的焦点状态不一样时
     ///进行修改并回调相应的生命周期函数
     if(currentFocus!=isFirstFocus){
@@ -103,8 +109,10 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
     ///实时 Frame 绘制回调，则通过 addPersistentFrameCallback 实现。
     ///这个函数会在每次绘制 Frame 结束后进行回调，可以用作 FPS 检测。
     WidgetsBinding.instance.addPersistentFrameCallback((Duration timeStamp) {
-      debugPrint(
-          " BaseLifeState 生命周期 实时 Frame 绘制回调 "); //  每帧都回调
+      if(isBaseLifeLog) {
+        debugPrint(
+            " BaseLifeState 生命周期 实时 Frame 绘制回调 "); //  每帧都回调
+      }
       if (currentMounted != mounted) {
         if (mounted) {
           ///当前Widget可见
@@ -125,7 +133,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   @override
   void reassemble() {
     super.reassemble();
-    debugPrint(' BaseLifeState 生命周期 reassemble');
+    if(isBaseLifeLog) {
+      debugPrint(' BaseLifeState 生命周期 reassemble');
+    }
   }
 
 
@@ -161,7 +171,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   ///I/flutter (15758): AppLifecycleState.resumed
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    debugPrint('BaseLifeState 生命周期 $state');
+    if(isBaseLifeLog) {
+      debugPrint('BaseLifeState 生命周期 $state');
+    }
     switch (state) {
       case AppLifecycleState.resumed:
 
@@ -189,7 +201,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   ///系统窗口改变回调 如键盘弹出 屏幕旋转等
   @override
   void didChangeMetrics() {
-    debugPrint('BaseLifeState 生命周期 didChangeMetrics');
+    if(isBaseLifeLog) {
+      debugPrint('BaseLifeState 生命周期 didChangeMetrics');
+    }
     super.didChangeMetrics();
   }
 
@@ -220,7 +234,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   @override
   void deactivate() {
     super.deactivate();
-    debugPrint('BaseLifeState 生命周期 deactivate');
+    if(isBaseLifeLog) {
+      debugPrint('BaseLifeState 生命周期 deactivate');
+    }
   }
 
   @override
@@ -231,26 +247,34 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
     routeObserver.unsubscribe(this);
     onDestory();
     super.dispose();
-    debugPrint('BaseLifeState 生命周期 dispose');
+    if(isBaseLifeLog) {
+      debugPrint('BaseLifeState 生命周期 dispose');
+    }
   }
 
   @override
   void didPush() {
     // 当前页面入栈
-    debugPrint("BaseLifeState 生命周期 didPush");
+    if(isBaseLifeLog) {
+      debugPrint("BaseLifeState 生命周期 didPush");
+    }
   }
 
   @override
   void didPopNext() {
     // 当前路由的下个路由出栈，且当前页面显示
-    debugPrint("BaseLifeState 生命周期 didPopNext");
+    if(isBaseLifeLog) {
+      debugPrint("BaseLifeState 生命周期 didPopNext");
+    }
     onStart();
   }
 
   @override
   void didPop() {
     super.didPop();
-    debugPrint("BaseLifeState 生命周期 didPop");
+    if(isBaseLifeLog) {
+      debugPrint("BaseLifeState 生命周期 didPop");
+    }
     isDidPop=true;
   }
 
@@ -258,7 +282,9 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   @override
   void didPushNext() {
     super.didPushNext();
-    debugPrint("BaseLifeState 生命周期 didPushNext");
+    if(isBaseLifeLog) {
+      debugPrint("BaseLifeState 生命周期 didPushNext");
+    }
     onStop();
   }
 
