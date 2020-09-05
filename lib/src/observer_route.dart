@@ -10,4 +10,4 @@ import 'package:flutter/material.dart';
 
 ///lib/app/config/observer_route.dart
 // 注册 RouteObserver  作为 navigation observer.
-final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+final RouteObserver<PageRoute> lifeFouteObserver = RouteObserver<PageRoute>();

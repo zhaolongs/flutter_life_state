@@ -1,6 +1,6 @@
 name: flutter_life_state
 description: Flutter 生命周期兼听库、Flutter组件生命周期、Widget生命周期
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/zhaolongs/flutter_life_state.git
 
 environment:

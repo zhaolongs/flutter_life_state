@@ -149,10 +149,10 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // 订阅 routeObserver，之后就会尝试调用抽象类 RouteAware 的方法
+    // 订阅 lifeFouteObserver，之后就会尝试调用抽象类 RouteAware 的方法
     if(_modalRoute==null){
       _modalRoute =ModalRoute.of(context);
-      routeObserver.subscribe(this,_modalRoute);
+      lifeFouteObserver.subscribe(this,_modalRoute);
     }
     if(isDidPop&&!isStop){
       isStop=true;
@@ -244,7 +244,7 @@ abstract class BaseLifeState<T extends StatefulWidget> extends State<T>
     ///注销
     WidgetsBinding.instance.removeObserver(this);
     ///解除订阅
-    routeObserver.unsubscribe(this);
+    lifeFouteObserver.unsubscribe(this);
     onDestory();
     super.dispose();
     if(isBaseLifeLog) {

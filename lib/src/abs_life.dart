@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 ///lib/app/base/abs_life.dart
 /// Widget 的完整生存期会在 [onCreate]调用和[onDestroy]调用之间发生
 ///
-///[onCreate]方法 在 [State]的initState方法中调用，一般在这个方法中初始化一些数据
+///[onWillCreat]方法 在 [State]的initState方法中调用，一般在这个方法中初始化一些数据
 /// 在此方法中 State与 BuildContext还未绑定好，所以是不可使用context的
 ///
-/// [onWillCreat]方法  在页面可见时回调，也就是页面的第一帧绘制完毕后回调
+/// [onCreate]方法  在页面可见时回调，也就是页面的第一帧绘制完毕后回调
 ///   类似Android中的onCreat方法
 ///   类似iOS中ViewController的 viewDidLoad 方法
 ///
